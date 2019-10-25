@@ -15,22 +15,25 @@
 		<h1 class="ui header">Plan a New Dive</h1>
 		<div class="ui divider"></div>
 		<h1 class="ui header">Calculate Pressure Group</h1>
+		<h3 class="ui header">Use test values from depth 60 column. Example: 60, 11 = B</h3>
 		<div class="ui form">
   			<div class="fields">
     			<div class="field">
       				<label>Planned Depth</label>
-      				<input type="text" placeholder="Planned Depth">
+      				<input type="text" id="depth"/>
     			</div>
     			<div class="field">
       				<label>Bottom Time</label>
-      				<input type="text" placeholder="Bottom Time">
+      				<input type="text" id="time"/>
     			</div>
 			    <div class="field">
 			     	<label>Pressure Group</label>
-			     	<input type="text" placeholder="Pressure Group">
+			     	<input type="text" id="pgroup"/>
+			     	<p id="pgroup2"></p>
 			    </div>
   			</div>
 		</div>
+		<button onclick="calcPressureGroup()" class="ui button" id="submit" type="submit">Submit</button>
 	</div>
 </body>
 
