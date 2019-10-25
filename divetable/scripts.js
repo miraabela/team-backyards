@@ -24,12 +24,14 @@ function calcPressureGroup() {
 	// if user time exceeds last value of time intervals, create alert.
 	let timeintervals = d60;
 	let userpgroup = '';
-	
-	if (time > timeintervals[timeintervals.length]) {
+	let exceeds = false;
+	if (time > timeintervals[timeintervals.length - 1]) {
 		alert("Your time exceeds the maximum");
+		exceeds = true;
 	}
+
 	let i = 0;
-	while (timeintervals[i] <= time) {
+	while ((timeintervals[i] <= time) && (!exceeds)) {
 		userpgroup = pgroups[i];
 		i = i+1;
 	}
