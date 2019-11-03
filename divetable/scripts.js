@@ -18,7 +18,9 @@ function calcPressureGroup() {
 
 	let d70 = [5, 9, 12, 13, 15, 16, 18, 19, 21, 22, 24, 26, 27, 29, 31, 33, 35, 36, 38, 40]
 	let d60 = [6, 11, 14, 16, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 43, 44, 47, 49];
-	
+	let d80 = [4,8,10,11,13,14,15,17,18,19,21,22,23,25,26,28,29,30]
+	let d90 = [4,7,9,10,11,12,13,15,16,17,18,19,21,22,23,24,25]
+
 	// loop through timeintervals for selected depth, check if user time
 	// is less than time interval. assign pressure group from time interval.
 	// if user time exceeds last value of time intervals, create alert.
@@ -39,3 +41,7 @@ function calcPressureGroup() {
 	document.getElementById("pgroup").value = userpgroup;
 	//document.getElementById("pgroup2").innerHTML = userpgroup;
 }
+
+
+
+
