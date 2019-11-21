@@ -14,6 +14,7 @@ function calcPressureGroup() {
 	let pgroups = ['A','B','C','D','E','F','G','H','I','J','K','L',
 	'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
+
 	// for now just practice with depth 60.
 
 	let d70 = [5, 9, 12, 13, 15, 16, 18, 19, 21, 22, 24, 26, 27, 29, 31, 33, 35, 36, 38, 40]
