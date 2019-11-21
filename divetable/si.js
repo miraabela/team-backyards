@@ -7,7 +7,7 @@
 // a[1] = string of bottom numbers
 
 
-// i will parse these to actual minutes later 
+// i will parse these to actual minutes later
 
 
 let siA = ['0:00','3:00'];
