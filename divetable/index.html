@@ -15,10 +15,10 @@
 		<h1 class="ui header">Plan a New Dive</h1>
 		<div class="ui divider"></div>
 		<h1 class="ui header">Calculate Pressure Group</h1>
-		<h3 class="ui header">Use test values from depth 60 column. Example: 60, 11 = B</h3>
-		<img class="ui fluid image" src="https://cdn.instructables.com/F3E/ERWV/077EP281UWG/F3EERWV077EP281UWG.LARGE.jpg?auto=webp&frame=1&fit=bounds">
+		<p class="ui">The Recreational Dive Planner is designed specifically for planning recreational (no decompression) dives on air only. 
+			Do not attempt to use it for planning decompression dives. This is a prototye. <br> DO NOT USE FOR ACTUAL DIVES. <strong>Misuse of this product may result in serious injury or death.</strong> </p>
 
-
+		<h4 class="ui header">Enter a depth up to 42 meters.</h4>
 		<div class="ui form">
   			<div class="fields">
     			<div class="field">
@@ -32,14 +32,18 @@
 			    <div class="field">
 			     	<label>Pressure Group</label>
 			     	<input type="text" id="pgroup"/>
-			     	<p id="pgroup2"></p>
-			    </div>
+				</div>
+				<div class="field">
+					<label>Safety Stop?</label>
+					<input type="text" id="safety"/>
+				</div>
   			</div>
 		</div>
-		<button onclick="calcPressureGroup()" class="ui button" id="submit" type="submit">Submit</button>
+		<button onclick="calcPressureGroup()" class="ui button fluid" id="submit" type="submit">Submit</button>
+		<hr>
+		<iframe src="https://elearning.padi.com/company0/tools/RDP_Table%20Met.pdf" width="100%" height="400px">
+		</iframe>
 	</div>
-
-	<div id="hc">Learning CSS3 is Fun :)</div>
 	
 </body>
 
