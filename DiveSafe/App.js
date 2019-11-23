@@ -7,7 +7,8 @@ import { StyleSheet } from 'react-native';
 
 
 import { Home } from './screens/Home';
-import { HomeTabIcon } from './components/nav/HomeTabIcon';
+import { Dive } from './screens/Dive';
+import { History } from './screens/History';
 
 
 export default function App() {
@@ -17,9 +18,11 @@ export default function App() {
       <ApplicationProvider mapping={mapping} theme={lightTheme}>
         <Router>
           <Stack key="root">
-            <Scene key="home" component={Home} title="Home" />
-            <Scene key="register" component={Register} title="Register" />
-            <Scene key="home" component={Home} />
+          
+            <Scene initial key="Home" component={Home} title="Home" />
+            <Scene lazy back key="Dive" component={Dive} title="Dive" />
+            <Scene lazy back key="History" component={History} title="History" />
+
           </Stack>
         </Router>
       </ApplicationProvider>
