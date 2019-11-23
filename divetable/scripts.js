@@ -52,18 +52,19 @@ function calcPressureGroup() {
 	if (withinRules) {	
 		for (let i = 0; i < depths.length; i++) {
 			timeintervals = [...timeints[i]];
+			
+			if (i >= depths.length - 6) {
+				safetystop = true;
+			}
 			if (depth <= depths[i]) {
 				break;
-			}
-			if (i >= depths.length - 5) {
-				safetystop = true;
 			}
 		}
 	}
 
 	let userpgroup = '';
 	if (time > timeintervals[timeintervals.length - 1]) {
-		alert("Your time exceeds the maximum");
+		alert("Your time exceeds the no decompression limit");
 		withinRules = false;
 	}
 
@@ -73,11 +74,11 @@ function calcPressureGroup() {
 			if (timeintervals[i] == 0) {
 				continue;
 			}
-			if (time <= timeintervals[i]) {
-				break;
-			}
 			if (i >= timeintervals.length - 4) {
 				safetystop = true;
+			}
+			if (time <= timeintervals[i]) {
+				break;
 			}
 		}
 	}
