@@ -1,9 +1,9 @@
 import React from 'react';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import { ApplicationProvider, IconRegistry, Layout } from 'react-native-ui-kitten';
+import { ApplicationProvider, IconRegistry } from 'react-native-ui-kitten';
 import { mapping, light as lightTheme } from '@eva-design/eva';
-import { Router, Stack, Scene, Tabs } from 'react-native-router-flux';
-import { StyleSheet, } from 'react-native';
+import { Router, Stack, Scene } from 'react-native-router-flux';
+import { StyleSheet } from 'react-native';
 
 
 import { Home } from './screens/Home';
@@ -16,15 +16,10 @@ export default function App() {
       <IconRegistry icons={EvaIconsPack}/>
       <ApplicationProvider mapping={mapping} theme={lightTheme}>
         <Router>
-          <Stack key='root' titleStyle={{ alignSelf: 'center' }} >
-            <Scene hideNavBar panHandlers={null}>
-            <Tabs key="tabbar" activeTintColor="#000000" routeName="tabbar" backToInitial >
-            <Stack initial key="Home" title="Home" 
-            inactiveBackgroundColor="#919191" activeBackgroundColor="#000000" icon={HomeTabIcon}>
-               <Scene initial key="Home" title="Home" component={Home}/>
-            </Stack>
-            </Tabs>
-            </Scene>
+          <Stack key="root">
+            <Scene key="home" component={Home} title="Home" />
+            <Scene key="register" component={Register} title="Register" />
+            <Scene key="home" component={Home} />
           </Stack>
         </Router>
       </ApplicationProvider>
