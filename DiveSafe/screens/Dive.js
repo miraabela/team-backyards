@@ -10,10 +10,10 @@ export class Dive extends React.Component {
     state = {
         user: 'Username',
         lastdive: {
-            pGroup: '',
-            residualNitrogen: '',
-            surfaceInterval: '',
-          },
+          pGroup: '',
+          residualNitrogen: '',
+          surfaceInterval: '',
+        },
         plannedDive: {
             depth: '',
             time: '',
