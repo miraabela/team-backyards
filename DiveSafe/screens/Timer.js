@@ -4,7 +4,7 @@ import {  StyleSheet, ScrollView, AsyncStorage } from 'react-native';
 import { Button, Text } from 'react-native-ui-kitten';
 
 
-export class History extends React.Component {
+export class Timer extends React.Component {
     state = {
         user: 'Username',
         lastdive: {
@@ -20,7 +20,7 @@ export class History extends React.Component {
             withinRules: true,
             calculatePressed: false,
         },
-        diveHistory = []
+        diveHistory: []
     }
     render(){
         return (
@@ -33,7 +33,7 @@ export class History extends React.Component {
 }
 
 
-History.propTypes = {}
+Timer.propTypes = {}
 
 
 const styles = StyleSheet.create({

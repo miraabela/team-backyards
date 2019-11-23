@@ -1,30 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {  StyleSheet, ScrollView, Image } from 'react-native';
+import {  StyleSheet, ScrollView, Image, AsyncStorage, Alert } from 'react-native';
 import { Button, Text } from 'react-native-ui-kitten';
 import { Actions } from 'react-native-router-flux';
 
 
 export class Home extends React.Component {
 
-  state = {
-    user: 'Username',
-    lastdive: {
-      pGroup: '',
-      residualNitrogen: '',
-      surfaceInterval: '',
-    },
-    plannedDive: {
-        depth: '',
-        time: '',
-        newPgroup: '',
-        safetystop: false,
-        withinRules: true,
-        calculatePressed: false,
-    },
-    diveHistory = []
-}
+  state = {}
+
+  getData = async () => {
+    try {
+      data = await AsyncStorage.getItem('userData')
+      this.setState(JSON.parse(data))
+      console.log(state)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
   render(){
+    this.getData
     return (
     <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
     alwaysBounceVertical={false} alwaysBounceHorizontal={false} {...this.props}>

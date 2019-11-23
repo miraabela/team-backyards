@@ -28,9 +28,9 @@ export default function App() {
           withinRules: true,
           calculatePressed: false,
       },
-      diveHistory = []
+      diveHistory: []
   }
-  AsyncStorage.setItem(userData, JSON.stringify(state))
+  AsyncStorage.setItem('userData', JSON.stringify(state))
 
 
   return (

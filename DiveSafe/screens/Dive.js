@@ -22,7 +22,7 @@ export class Dive extends React.Component {
             withinRules: true,
             calculatePressed: false,
         },
-        diveHistory = []
+        diveHistory: []
     }
 
     onChangeDepth = (value) => {
