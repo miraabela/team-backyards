@@ -154,10 +154,18 @@ Upon surfacing, the diver must remain out of the water for at least 24 hours pri
             <Text category='h5'>{this.state.lastdive.residualNitrogen}</Text>
             <Input label='DEPTH' placeholder='Enter depths below 42 meters.'
                 value={this.state.plannedDive.depth}
-                onChangeText={this.onChangeDepth}/>
+                onChangeText={this.onChangeDepth}
+                keyboardType='numeric'
+                returnKeyType='done'
+                size='medium'
+                />
              <Input label='BOTTOM TIME' placeholder='Enter bottom time.'
                 value={this.state.plannedDive.time}
-                onChangeText={this.onChangeTime}/>
+                onChangeText={this.onChangeTime}
+                keyboardType='numeric'
+                returnKeyType='done'
+                size='medium'
+                />
             <Button style={styles.button} onPress={this.calculateDive}status='info'>Calculate Plan</Button>
             { this.state.plannedDive.withinRules && this.state.plannedDive.calculatePressed &&
             <View>
