@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import {  StyleSheet, ScrollView, Image } from 'react-native';
 import { Button, Text } from 'react-native-ui-kitten';
 
-import { DiveCard } from '../components/DiveCard';
-import { Dive } from './Dive';
 
-
-export class History extends React.Component {
+export class SingleDivePage extends React.Component {
 
     state = {
         user: "Username",
@@ -19,24 +16,19 @@ export class History extends React.Component {
         return (
         <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
         alwaysBounceVertical={false} alwaysBounceHorizontal={false} {...this.props}>
-            <Text category='h3'>List of Dives</Text>
-            <DiveCard style={styles.card}/>
+            <Text category='label'>Single Dive Page</Text>
         </ScrollView>
         )
     }
 }
 
 
-History.propTypes = {}
+SingleDivePage.propTypes = {}
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 15,
-  },
-  card: {
-    margin: 5,
-  }
+    container: {
+      flex: 1,
+    },
   });
   

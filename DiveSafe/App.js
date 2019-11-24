@@ -10,6 +10,7 @@ import { Home } from './screens/Home';
 import { Dive } from './screens/Dive';
 import { History } from './screens/History';
 import { Timer } from './screens/Timer';
+import { SingleDivePage } from './screens/SingleDivePage';
 
 
 export default function App() {
@@ -59,6 +60,7 @@ export default function App() {
             <Scene lazy back key="Dive" component={Dive} title="Dive" />
             <Scene lazy back key="Timer" component={Timer} title="Timer" />
             <Scene lazy back key="History" component={History} title="History" />
+            <Scene lazy back key="SingleDivePage" component={SingleDivePage} title="Dive Summary" />
           </Stack>
         </Router>
       </ApplicationProvider>
