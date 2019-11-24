@@ -6,17 +6,15 @@ import { Button, Text } from 'react-native-ui-kitten';
 
 export class SingleDivePage extends React.Component {
 
-    state = {
-        user: "Username",
-        lastdive: "24 hours",
-        pressureGroup: "A",
-        residualNitrogen: 0,
-      }
+
     render(){
         return (
         <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
         alwaysBounceVertical={false} alwaysBounceHorizontal={false} {...this.props}>
             <Text category='label'>Single Dive Page</Text>
+
+            {/* Content goes inbetween ScrollView */}
+            
         </ScrollView>
         )
     }

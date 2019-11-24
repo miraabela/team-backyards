@@ -26,7 +26,10 @@ export class Timer extends React.Component {
         return (
         <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
         alwaysBounceVertical={false} alwaysBounceHorizontal={false} {...this.props}>
-            <Text category='label'>List of Dives</Text>
+            <Text category='label'>Timer</Text>
+
+                {/* Content goes inbetween ScrollView */}
+
         </ScrollView>
         )
     }
