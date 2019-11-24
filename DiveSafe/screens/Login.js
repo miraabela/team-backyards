@@ -25,14 +25,14 @@ export class Login extends React.Component {
         diveHistory: []
     }
     
-    // logIn = async () => {
-    //     try {
-    //         AsyncStorage.setItem('userData', JSON.stringify(this.state))
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    //     Actions.Home()
-    // }
+    logIn = async () => {
+        try {
+            AsyncStorage.setItem('userData', JSON.stringify(this.state))
+        } catch (error) {
+            console.log(error)
+        }
+        Actions.Home()
+    }
 
 
     render(){

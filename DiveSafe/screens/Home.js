@@ -7,53 +7,45 @@ import { Actions } from 'react-native-router-flux';
 
 export class Home extends React.Component {
 
+  state = {data: {}, isLoading: true}
+  newData = {}
 
-  // componentWillMount() {
-  //   this.getData()
-  // }
+  componentWillMount() {
+    this.getData()
+  }
+  updateState = (data) => {
+    this.setState({data: data, isLoading: false})
+  }
 
-
-  // getData = async () => {
-  //   try {
-  //     data = await AsyncStorage.getItem('userData')
-  //     console.log(data)
-  //     newState = JSON.parse(data)
-  //     console.log(newState)
-  //     this.setState({data: newState})
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  state = {
-    user: 'Username',
-    lastdive: {
-      pGroup: '',
-      residualNitrogen: '',
-      surfaceInterval: '',
-    },
-    plannedDive: {
-        depth: '',
-        time: '',
-        newPgroup: '',
-        safetystop: false,
-        withinRules: true,
-        calculatePressed: false,
-    },
-    diveHistory: []
-}
+  getData = async () => {
+    try {
+      data = await AsyncStorage.getItem('userData')
+      console.log(data)
+      newState = JSON.parse(data)
+      this.updateState(newState)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   render(){
+    if (this.state.isLoading) {
+      return <Text category='h2'>Loading...</Text>
+    }
 
     return (
     <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
     alwaysBounceVertical={false} alwaysBounceHorizontal={false} {...this.props}>
-        <Text category='h4'>Welcome, {this.state.user}</Text> 
-        <Text category='h5'>It has been {this.state.lastdive.surfaceInterval} since your last dive.</Text>
-        <Text category='h5'>Your current pressure group is {this.state.lastdive.pGroup}.</Text>
-        <Text category='h5'>You have {this.state.lastdive.residualNitrogen} residual nitrogen minutes.</Text>
-        <Button onPress={Actions.Dive} status='info'>Start Dive</Button>
-        <Button onPress={Actions.History} status='info'>See History</Button>
+        <Text category='h3'>Welcome, {this.state.data.user}</Text> 
+        <Text category='s1'>Time since last dive: </Text>
+        <Text category='h5'>{this.state.data.lastdive.surfaceInterval == '' ? '24+ hours': this.state.data.lastdive.residualNitrogen}</Text>
+        <Text category='s1'>Current pressure group:  </Text>
+        <Text category='h5'>{this.state.data.lastdive.pGroup == '' ? 'A': this.state.data.lastdive.pGroup}</Text>
+        <Text category='s1'>Residual nitrogen: </Text>
+
+        <Text category='h5'>{this.state.data.lastdive.residualNitrogen == '' ? '0': this.state.data.lastdive.residualNitrogen}</Text>
+        <Button style={styles.button} onPress={Actions.Dive} status='info'>Start Dive</Button>
+        <Button style={styles.button} onPress={Actions.History} status='info'>See History</Button>
     </ScrollView>
     )
   }
@@ -66,6 +58,10 @@ Home.propTypes = {}
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      padding: 15,
     },
+    button: {
+      margin: 5
+    }
   });
   

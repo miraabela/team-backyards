@@ -14,6 +14,38 @@ import { Timer } from './screens/Timer';
 
 export default function App() {
 
+  state = {
+    user: 'Admin',
+    lastdive: {
+      pGroup: '',
+      residualNitrogen: '',
+      surfaceInterval: '',
+    },
+    plannedDive: {
+        depth: '',
+        time: '',
+        newPgroup: '',
+        safetystop: false,
+        withinRules: true,
+        calculatePressed: false,
+        comments: '',
+    },
+    diveHistory: []
+}
+
+  setData = async () => {
+      try {
+          AsyncStorage.setItem('userData', JSON.stringify(this.state))
+      } catch (error) {
+          console.log(error)
+      }
+  }
+
+  handleEntrance = () => {
+    AsyncStorage.clear()
+    this.setData()
+  }
+
   return (
     <React.Fragment>
       <IconRegistry icons={EvaIconsPack}/>
@@ -21,7 +53,9 @@ export default function App() {
         <Router>
           <Stack key="root">
             {/* <Scene initial back key="Login" component={Login} title="Login" /> */}
-            <Scene initial key="Home" component={Home} title="Home" />
+            <Scene initial key="Home" component={Home} title="Home"
+              onEnter={this.handleEntrance}
+            />
             <Scene lazy back key="Dive" component={Dive} title="Dive" />
             <Scene lazy back key="Timer" component={Timer} title="Timer" />
             <Scene lazy back key="History" component={History} title="History" />

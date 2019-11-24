@@ -10,8 +10,8 @@ export class Dive extends React.Component {
     state = {
         user: 'Username',
         lastdive: {
-          pGroup: '',
-          residualNitrogen: '',
+          pGroup: 'A',
+          residualNitrogen: '0',
           surfaceInterval: '',
         },
         plannedDive: {
@@ -21,6 +21,7 @@ export class Dive extends React.Component {
             safetystop: false,
             withinRules: true,
             calculatePressed: false,
+            comments: '',
         },
         diveHistory: []
     }
@@ -60,7 +61,7 @@ export class Dive extends React.Component {
         if (this.state.plannedDive.depth == '' || this.state.plannedDive.time == '') {
             Alert.alert('Error','Please enter values');
             this.setState({
-                plannedDive: {...this.state.plannedDive, withinRules: false, calculatePressed: false, time: '', depth: ''}
+                plannedDive: {...this.state.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
             })
             return null
         }
@@ -69,13 +70,14 @@ export class Dive extends React.Component {
         time = parseFloat(this.state.plannedDive.time)
         withinRules = this.state.plannedDive.withinRules
         timeintervals = []
-        safetystop = this.state.plannedDive.safetystop
+        safetystop = false
         newPgroup = ''
-        
+        planComments = ''
+
         if (depth > 42) {
             Alert.alert('Error','Depth must be less than 42 meters');
             this.setState({
-                plannedDive: {...this.state.plannedDive, withinRules: false, calculatePressed: false, time: '', depth: ''}
+                plannedDive: {...this.state.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
             })
             return null
         }
@@ -83,7 +85,7 @@ export class Dive extends React.Component {
         if ( time < 0 || depth < 0) {
             Alert.alert('Error','Please enter positive values');
             this.setState({
-                plannedDive: {...this.state.plannedDive, withinRules: false, calculatePressed: false, time: '', depth: ''}
+                plannedDive: {...this.state.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
             })
             return null
         }
@@ -106,7 +108,7 @@ export class Dive extends React.Component {
         if (time > timeintervals[timeintervals.length - 1]) {
             Alert.alert('Error','Your time exceeds the no decompression limit');
             this.setState({
-                plannedDive: {...this.state.plannedDive, withinRules: false, calculatePressed: false, time: '', depth: ''}
+                plannedDive: {...this.state.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
             })
             return null
         }
@@ -119,6 +121,14 @@ export class Dive extends React.Component {
                 }
                 if (i >= timeintervals.length - 4) {
                     safetystop = true;
+                    planComments = 'Proceed with caution.';
+                }
+                if (i >= timeintervals.length - 2) {
+                    planComments = 
+`WARNING: If you exceed planned bottom time by 5 minutes, an emergency decompression stop is required at 5 meters for 8 minutes.
+Upon surfacing, the diver must remain out of the water for at least 6 hours prior to making another dive.
+If a no decompression limit is exceeded by more than 5 minutes, a 5m decompression stop of no less than 15 minutes is urged (air supply permitting).
+Upon surfacing, the diver must remain out of the water for at least 24 hours prior to making another dive.`;
                 }
                 if (time <= timeintervals[i]) {
                     break;
@@ -127,7 +137,8 @@ export class Dive extends React.Component {
         }
         console.log(newPgroup)
         this.setState({
-            plannedDive: {time: time.toString(), depth: depth.toString(), withinRules: true, newPgroup: newPgroup, safetystop: safetystop, calculatePressed: true}
+            plannedDive: {time: time.toString(), depth: depth.toString(), withinRules: true, newPgroup: newPgroup,
+                safetystop: safetystop, calculatePressed: true, comments: planComments}
         })
     }
 
@@ -137,8 +148,10 @@ export class Dive extends React.Component {
         return (
         <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
         alwaysBounceVertical={false} alwaysBounceHorizontal={false} {...this.props}>
-            <Text category='h6'>Current Pressure Group: {this.state.pressureGroup}</Text>
-            <Text category='h6'>Current Residual Nitrogen: {this.state.residualNitrogen}</Text>
+            <Text category='s1'>Current Pressure Group: </Text>
+            <Text category='h5'>{this.state.lastdive.pGroup}</Text>
+            <Text category='s1'>Current Residual Nitrogen: </Text>
+            <Text category='h5'>{this.state.lastdive.residualNitrogen}</Text>
             <Input label='DEPTH' placeholder='Enter depths below 42 meters.'
                 value={this.state.plannedDive.depth}
                 onChangeText={this.onChangeDepth}/>
@@ -148,9 +161,14 @@ export class Dive extends React.Component {
             <Button style={styles.button} onPress={this.calculateDive}status='info'>Calculate Plan</Button>
             { this.state.plannedDive.withinRules && this.state.plannedDive.calculatePressed &&
             <View>
-                <Text category='h5'>Planned Pressure Group: {this.state.plannedDive.newPgroup}</Text> 
-                <Text category='h5'>Safety Stop: {this.state.plannedDive.safetystop ? 'Required at 5 meters for 3 minutes.' : 'Not Required'}</Text>
-                <Button style={styles.button} onPress={() => Actions.Timer} status='success'>Proceed</Button>
+                <Text category='s1'>Planned Pressure Group:</Text>
+                <Text category='h5'>{this.state.plannedDive.newPgroup}</Text> 
+                <Text category='s1'>Safety Stop:</Text>
+                <Text category='h5'>{this.state.plannedDive.safetystop ? 'Required at 5 meters for 3 minutes.' : 'Not Required'}</Text>
+                <Text category='s1'>Comments:</Text>
+                <Text category='h6'>{this.state.plannedDive.comments == '' ? 'None' : this.state.plannedDive.comments}</Text>
+
+                <Button style={styles.button} status={this.state.plannedDive.comments == '' ? 'success': 'warning'}>Proceed</Button>
             </View>}
             {console.log(this.state)}
         </ScrollView>
@@ -164,6 +182,10 @@ Dive.propTypes = {}
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      padding: 15,
     },
+    button: {
+        margin: 5
+    }
   });
   
