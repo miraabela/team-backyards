@@ -32,24 +32,24 @@ export class DiveCard extends React.Component {
 
     render(){
         return (
-            <TouchableOpacity activeOpacity={0.80} onPress={Actions.SingleDivePage}>
+            <TouchableOpacity activeOpacity={0.80} onPress={() => Actions.SingleDivePage({dive: this.props.dive})}>
                 <ImageBackground style={styles.container} source={require('../assets/underwater.jpg')}>
                     <View style={styles.overlay}>
                         <View  style={styles.chipContainer}>
                             <Text style={styles.levelLabel} category='h5'> 
-                                {this.testDive.date}
+                                {this.props.dive.isDescending}
                             </Text>
                         </View>
 
                         <View style={styles.chipContainer}>
                             <Text style={styles.chipsText} category='s1'>
-                            {this.testDive.location}  
+                            {this.props.dive.location}  
                             </Text>
                             <Text style={styles.chipsText} category='s1'>
-                            {this.testDive.depth} meters
+                            {this.props.dive.actualDepth} meters
                             </Text>
                             <Text style={styles.chipsText} category='s1'>
-                            {this.testDive.time} minutes
+                            {this.props.dive.actualTime} minutes
                             </Text>
                         </View>
                     </View>

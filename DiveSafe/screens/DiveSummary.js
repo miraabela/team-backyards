@@ -4,15 +4,11 @@ import {  StyleSheet, ScrollView, Image } from 'react-native';
 import { Button, Text } from 'react-native-ui-kitten';
 
 
-export class SingleDivePage extends React.Component {
+export class DiveSummary extends React.Component {
 
 
-  // Access dive through props, 
-  // list of dives displayed in DiveHistory, 
-  // pass single dive data to DiveCard, onPress of DiveCard, Actions.SingleDivePage
+  // Access most recent dive stats, through diveHistory[diveHistory.length-1]
 
-  
-  
     render(){
         return (
         <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
@@ -27,9 +23,7 @@ export class SingleDivePage extends React.Component {
 }
 
 
-SingleDivePage.propTypes = {
-  dive: PropTypes.object,
-}
+DiveSummary.propTypes = {}
 
 
 const styles = StyleSheet.create({

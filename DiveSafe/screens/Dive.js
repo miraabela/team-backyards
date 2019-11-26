@@ -7,35 +7,47 @@ import { Actions } from 'react-native-router-flux';
 
 export class Dive extends React.Component {
 
-    state = {
-        user: 'Username',
-        lastdive: {
-          pGroup: 'A',
-          residualNitrogen: '0',
-          surfaceInterval: '',
-        },
-        plannedDive: {
-            depth: '',
-            time: '',
-            newPgroup: '',
-            safetystop: false,
-            withinRules: true,
-            calculatePressed: false,
-            comments: '',
-        },
-        diveHistory: []
+    state = {data: {}, isLoading: true}
+    newData = {}
+  
+    componentWillMount() {
+      this.getData()
     }
+    updateState = (data) => {
+      this.setState({data: data, isLoading: false})
+    }
+  
+    getData = async () => {
+      try {
+        data = await AsyncStorage.getItem('userData')
+        newState = JSON.parse(data)
+        this.updateState(newState)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  
 
     onChangeDepth = (value) => {
         this.setState({
-            plannedDive: {...this.state.plannedDive, depth: value, withinRules: true}
+            plannedDive: {...this.state.data.plannedDive, depth: value, withinRules: true}
         })
     };
     onChangeTime = (value) => {
         this.setState({
-            plannedDive: {...this.state.plannedDive, time: value, withinRules: true}
+            plannedDive: {...this.state.data.plannedDive, time: value, withinRules: true}
         })
     };
+
+
+    proceedPressed = async () => {
+        try {
+            AsyncStorage.mergeItem('userData', JSON.stringify(this.state.data))
+        } catch (error) {
+            console.log(error)
+        }
+        Actions.Timer
+    }
 
 
     calculateDive = () => {
@@ -58,17 +70,17 @@ export class Dive extends React.Component {
         depths = [10, 12, 14, 16, 18, 20, 22, 25, 30, 35, 40, 42];
         timeints = [d10, d12, d14, d16, d18, d20, d22, d25, d30, d35, d40, d42];
     
-        if (this.state.plannedDive.depth == '' || this.state.plannedDive.time == '') {
+        if (this.state.data.plannedDive.depth == '' || this.state.data.plannedDive.time == '') {
             Alert.alert('Error','Please enter values');
             this.setState({
-                plannedDive: {...this.state.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
+                plannedDive: {...this.state.data.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
             })
             return null
         }
 
-        depth = parseFloat(this.state.plannedDive.depth)
-        time = parseFloat(this.state.plannedDive.time)
-        withinRules = this.state.plannedDive.withinRules
+        depth = parseFloat(this.state.data.plannedDive.depth)
+        time = parseFloat(this.state.data.plannedDive.time)
+        withinRules = this.state.data.plannedDive.withinRules
         timeintervals = []
         safetystop = false
         newPgroup = ''
@@ -77,7 +89,7 @@ export class Dive extends React.Component {
         if (depth > 42) {
             Alert.alert('Error','Depth must be less than 42 meters');
             this.setState({
-                plannedDive: {...this.state.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
+                plannedDive: {...this.state.data.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
             })
             return null
         }
@@ -85,11 +97,10 @@ export class Dive extends React.Component {
         if ( time < 0 || depth < 0) {
             Alert.alert('Error','Please enter positive values');
             this.setState({
-                plannedDive: {...this.state.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
+                plannedDive: {...this.state.data.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
             })
             return null
         }
-
 
         if (withinRules) {	
             for (let i = 0; i < depths.length; i++) {
@@ -108,7 +119,7 @@ export class Dive extends React.Component {
         if (time > timeintervals[timeintervals.length - 1]) {
             Alert.alert('Error','Your time exceeds the no decompression limit');
             this.setState({
-                plannedDive: {...this.state.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
+                plannedDive: {...this.state.data.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
             })
             return null
         }
@@ -135,16 +146,18 @@ Upon surfacing, the diver must remain out of the water for at least 24 hours pri
                 }
             }
         }
-        console.log(newPgroup)
+
+
         this.setState({
             plannedDive: {time: time.toString(), depth: depth.toString(), withinRules: true, newPgroup: newPgroup,
                 safetystop: safetystop, calculatePressed: true, comments: planComments}
         })
     }
 
-
-
     render(){
+        if (this.state.isLoading) {
+            return <Text category='h2'>Loading...</Text>
+        }
         return (
         <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
         alwaysBounceVertical={false} alwaysBounceHorizontal={false} {...this.props}>
@@ -176,7 +189,7 @@ Upon surfacing, the diver must remain out of the water for at least 24 hours pri
                 <Text category='s1'>Comments:</Text>
                 <Text category='h6'>{this.state.plannedDive.comments == '' ? 'None' : this.state.plannedDive.comments}</Text>
 
-                <Button style={styles.button} status={this.state.plannedDive.comments == '' ? 'success': 'warning'}>Proceed</Button>
+                <Button style={styles.button} onPress={this.proceedPressed}status={this.state.plannedDive.comments == '' ? 'success': 'warning'}>Proceed</Button>
             </View>}
             {console.log(this.state)}
         </ScrollView>

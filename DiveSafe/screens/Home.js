@@ -20,7 +20,6 @@ export class Home extends React.Component {
   getData = async () => {
     try {
       data = await AsyncStorage.getItem('userData')
-      console.log(data)
       newState = JSON.parse(data)
       this.updateState(newState)
     } catch (error) {

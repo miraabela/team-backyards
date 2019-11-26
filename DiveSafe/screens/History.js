@@ -9,6 +9,9 @@ import { Dive } from './Dive';
 
 export class History extends React.Component {
 
+
+  // get list of dives here,
+  // if list is empty return "you have no dives!"
     state = {
         user: "Username",
         lastdive: "24 hours",
@@ -16,6 +19,8 @@ export class History extends React.Component {
         residualNitrogen: 0,
       }
     render(){
+
+      
         return (
         <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
         alwaysBounceVertical={false} alwaysBounceHorizontal={false} {...this.props}>
