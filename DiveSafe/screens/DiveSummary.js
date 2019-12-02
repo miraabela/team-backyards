@@ -6,7 +6,8 @@ import { Button, Text } from 'react-native-ui-kitten';
 
 export class DiveSummary extends React.Component {
 
-
+  // TODO
+  // ASK USER TO PLAN A NEW DIVE OR RETURN TO HOME SCREEN 
   // Access most recent dive stats, through diveHistory[diveHistory.length-1]
 
     render(){

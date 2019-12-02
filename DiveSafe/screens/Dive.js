@@ -4,6 +4,11 @@ import {  Alert, StyleSheet, ScrollView, View, AsyncStorage } from 'react-native
 import { Button, Text, Input } from 'react-native-ui-kitten';
 import { Actions } from 'react-native-router-flux';
 
+// TODO
+// ask user DID YOU DIVE WITHIN THE LAST 24 HOURS?
+// check if last dive was more than 24 hours ago
+// if not, goto continuing dive
+
 
 export class Dive extends React.Component {
 
