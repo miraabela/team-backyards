@@ -37,7 +37,7 @@ export class DiveCard extends React.Component {
                     <View style={styles.overlay}>
                         <View  style={styles.chipContainer}>
                             <Text style={styles.levelLabel} category='h5'> 
-                                {this.props.dive.isDescending}
+                                {this.props.dive.date}
                             </Text>
                         </View>
 
