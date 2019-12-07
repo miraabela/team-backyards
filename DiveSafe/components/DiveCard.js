@@ -37,19 +37,19 @@ export class DiveCard extends React.Component {
                     <View style={styles.overlay}>
                         <View  style={styles.chipContainer}>
                             <Text style={styles.levelLabel} category='h5'> 
-                                {this.testDive.dive.date}
+                                {this.testDive.date}
                             </Text>
                         </View>
 
                         <View style={styles.chipContainer}>
                             <Text style={styles.chipsText} category='s1'>
-                            {this.testDive.dive.location}  
+                            {this.testDive.location}  
                             </Text>
                             <Text style={styles.chipsText} category='s1'>
-                            {this.testDive.dive.actualDepth} meters
+                            {this.testDive.actualDepth} meters
                             </Text>
                             <Text style={styles.chipsText} category='s1'>
-                            {this.testDive.dive.actualTime} minutes
+                            {this.testDive.actualTime} minutes
                             </Text>
                         </View>
                     </View>
