@@ -11,6 +11,8 @@ import { Dive } from './screens/Dive';
 import { History } from './screens/History';
 import { Timer } from './screens/Timer';
 import { SingleDivePage } from './screens/SingleDivePage';
+import { DiveSummary } from './screens/DiveSummary';
+
 
 
 export default function App() {
