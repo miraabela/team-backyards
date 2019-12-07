@@ -34,14 +34,16 @@ export class Dive extends React.Component {
   
 
     onChangeDepth = (value) => {
-        this.setState({
-            plannedDive: {...this.state.data.plannedDive, depth: value, withinRules: true}
-        })
+        this.setState(prevState => ({...prevState, data: {
+            ...prevState.data,
+            plannedDive: {...prevState.data.plannedDive, depth: value, withinRules: true}
+        }}))
     };
     onChangeTime = (value) => {
-        this.setState({
-            plannedDive: {...this.state.data.plannedDive, time: value, withinRules: true}
-        })
+        this.setState(prevState => ({...prevState, data: {
+            ...prevState.data,
+            plannedDive: {...prevState.data.plannedDive, time: value, withinRules: true}
+        }}))
     };
 
 
@@ -77,9 +79,10 @@ export class Dive extends React.Component {
     
         if (this.state.data.plannedDive.depth == '' || this.state.data.plannedDive.time == '') {
             Alert.alert('Error','Please enter values');
-            this.setState({
-                plannedDive: {...this.state.data.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
-            })
+            this.setState(prevState => ({...prevState, data: {
+                ...prevState.data,
+                plannedDive: {...prevState.data.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
+            }}))
             return null
         }
 
@@ -93,17 +96,19 @@ export class Dive extends React.Component {
 
         if (depth > 42) {
             Alert.alert('Error','Depth must be less than 42 meters');
-            this.setState({
-                plannedDive: {...this.state.data.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
-            })
+            this.setState(prevState => ({...prevState, data: {
+                ...prevState.data,
+                plannedDive: {...prevState.data.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
+            }}))
             return null
         }
 
         if ( time < 0 || depth < 0) {
             Alert.alert('Error','Please enter positive values');
-            this.setState({
-                plannedDive: {...this.state.data.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
-            })
+            this.setState(prevState => ({...prevState, data: {
+                ...prevState.data,
+                plannedDive: {...prevState.data.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
+            }}))
             return null
         }
 
@@ -123,9 +128,10 @@ export class Dive extends React.Component {
 
         if (time > timeintervals[timeintervals.length - 1]) {
             Alert.alert('Error','Your time exceeds the no decompression limit');
-            this.setState({
-                plannedDive: {...this.state.data.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
-            })
+            this.setState(prevState => ({...prevState, data: {
+                ...prevState.data,
+                plannedDive: {...prevState.data.plannedDive, withinRules: false, calculatePressed: false, newPgroup: '', time: '', depth: '', comments: '', safetystop: false}
+            }}))
             return null
         }
     
@@ -152,11 +158,11 @@ Upon surfacing, the diver must remain out of the water for at least 24 hours pri
             }
         }
 
-
-        this.setState({
+        this.setState(prevState => ({...prevState, data: {
+            ...prevState.data,
             plannedDive: {time: time.toString(), depth: depth.toString(), withinRules: true, newPgroup: newPgroup,
                 safetystop: safetystop, calculatePressed: true, comments: planComments}
-        })
+            }}))
     }
 
     render(){
@@ -167,34 +173,34 @@ Upon surfacing, the diver must remain out of the water for at least 24 hours pri
         <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
         alwaysBounceVertical={false} alwaysBounceHorizontal={false} {...this.props}>
             <Text category='s1'>Current Pressure Group: </Text>
-            <Text category='h5'>{this.state.lastdive.pGroup}</Text>
+            <Text category='h5'>{this.state.data.lastdive.pGroup}</Text>
             <Text category='s1'>Current Residual Nitrogen: </Text>
-            <Text category='h5'>{this.state.lastdive.residualNitrogen}</Text>
+            <Text category='h5'>{this.state.data.lastdive.residualNitrogen}</Text>
             <Input label='DEPTH' placeholder='Enter depths below 42 meters.'
-                value={this.state.plannedDive.depth}
+                value={this.state.data.plannedDive.depth}
                 onChangeText={this.onChangeDepth}
                 keyboardType='numeric'
                 returnKeyType='done'
                 size='medium'
                 />
              <Input label='BOTTOM TIME' placeholder='Enter bottom time.'
-                value={this.state.plannedDive.time}
+                value={this.state.data.plannedDive.time}
                 onChangeText={this.onChangeTime}
                 keyboardType='numeric'
                 returnKeyType='done'
                 size='medium'
                 />
             <Button style={styles.button} onPress={this.calculateDive}status='info'>Calculate Plan</Button>
-            { this.state.plannedDive.withinRules && this.state.plannedDive.calculatePressed &&
+            { this.state.data.plannedDive.withinRules && this.state.data.plannedDive.calculatePressed &&
             <View>
                 <Text category='s1'>Planned Pressure Group:</Text>
-                <Text category='h5'>{this.state.plannedDive.newPgroup}</Text> 
+                <Text category='h5'>{this.state.data.plannedDive.newPgroup}</Text> 
                 <Text category='s1'>Safety Stop:</Text>
-                <Text category='h5'>{this.state.plannedDive.safetystop ? 'Required at 5 meters for 3 minutes.' : 'Not Required'}</Text>
+                <Text category='h5'>{this.state.data.plannedDive.safetystop ? 'Required at 5 meters for 3 minutes.' : 'Not Required'}</Text>
                 <Text category='s1'>Comments:</Text>
-                <Text category='h6'>{this.state.plannedDive.comments == '' ? 'None' : this.state.plannedDive.comments}</Text>
+                <Text category='h6'>{this.state.data.plannedDive.comments == '' ? 'None' : this.state.data.plannedDive.comments}</Text>
 
-                <Button style={styles.button} onPress={this.proceedPressed}status={this.state.plannedDive.comments == '' ? 'success': 'warning'}>Proceed</Button>
+                <Button style={styles.button} onPress={this.proceedPressed}status={this.state.data.plannedDive.comments == '' ? 'success': 'warning'}>Proceed</Button>
             </View>}
             {console.log(this.state)}
         </ScrollView>
