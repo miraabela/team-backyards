@@ -8,6 +8,7 @@ import { StyleSheet, AsyncStorage } from 'react-native';
 import { Login } from './screens/Login';
 import { Home } from './screens/Home';
 import { Dive } from './screens/Dive';
+import { Interval } from './screens/Interval';
 import { History } from './screens/History';
 import { Timer } from './screens/Timer';
 import { SingleDivePage } from './screens/SingleDivePage';
@@ -55,7 +56,6 @@ export default function App() {
       startedSafetyStop: '', //new Date() as soon as Safety Stop is pressed, ONLY IF NEEDED
       currentSafetyTime: '', //update every 5 seconds. Stop updating when paused or stopped
 
-
       surfaced: false, //should be false until ascend timer is done. then update to true
       surfacedTime: '', //new Date() when ascend timer is stopped
 
@@ -89,6 +89,7 @@ export default function App() {
             {/* <Scene initial back key="Login" component={Login} title="Login" /> */}
             <Scene initial key="Home" component={Home} title="Home" onEnter={this.handleEntrance}/>
             <Scene lazy back key="Dive" component={Dive} title="Dive" />
+            <Scene lazy back key="Interval" component={Interval} title="Interval" />
             <Scene lazy back key="Timer" component={Timer} title="Timer" />
             <Scene lazy back key="History" component={History} title="History" />
             <Scene lazy back key="SingleDivePage" component={SingleDivePage} title="Dive Summary" />

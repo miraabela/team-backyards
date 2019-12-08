@@ -45,6 +45,8 @@ export class Home extends React.Component {
         <Text category='h5'>{this.state.data.lastdive.residualNitrogen == '' ? '0': this.state.data.lastdive.residualNitrogen}</Text>
         <Button style={styles.button} onPress={Actions.Dive} status='info'>Start Dive</Button>
         <Button style={styles.button} onPress={Actions.History} status='info'>See History</Button>
+        <Button style={styles.button} onPress={Actions.Interval} status='info'>Test Surface Intervals</Button>
+
     </ScrollView>
     )
   }
