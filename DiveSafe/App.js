@@ -14,6 +14,7 @@ import { History } from './screens/History';
 import { Timer } from './screens/Timer';
 import { SingleDivePage } from './screens/SingleDivePage';
 import { DiveSummary } from './screens/DiveSummary';
+import { DiveTimer } from './screens/DiveTimer';
 
 
 
@@ -93,6 +94,7 @@ export default function App() {
             <Scene lazy back key="Interval" component={Interval} title="Interval" /> 
             <Scene lazy back key="Continue" component={Continue} title="Continue" />
             <Scene lazy back key="Timer" component={Timer} title="Timer" />
+            <Scene lazy back key="DiveTimer" component={DiveTimer} title="Dive Timer" />
             <Scene lazy back key="History" component={History} title="History" />
             <Scene lazy back key="SingleDivePage" component={SingleDivePage} title="Dive Summary" />
             <Scene lazy back key="DiveSummary" component={DiveSummary} title="Dive Summary" />
