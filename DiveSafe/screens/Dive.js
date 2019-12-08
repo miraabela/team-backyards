@@ -52,7 +52,8 @@ export class Dive extends React.Component {
         } catch (error) {
             console.log(error)
         }
-        Actions.Timer
+        Actions.Timer()
+        // Actions.DiveTimer()
     }
 
 

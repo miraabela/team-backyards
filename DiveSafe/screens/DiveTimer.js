@@ -39,7 +39,7 @@ function DivePhase({ name, interval}) {
     <View style={styles.phase}>
       <Text style={phaseStyle}>{name}</Text>
       <Timer style={[phaseStyle, styles.phaseTimer]} interval={interval}/>
-    </View>
+    </View> 
   )
 }
 
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
   phase: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderColor: '#151515',
+    borderColor: '#d3d3db',
     borderTopWidth: 1,
     paddingVertical: 10,
   },
