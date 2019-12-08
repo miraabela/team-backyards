@@ -31,7 +31,7 @@ export class Continue extends React.Component {
         this.setState({...this.state, depth: value, withinRules1: true})
     };
     onChangePlannedTime = (value) => {
-        this.setState({...this.state, plannedTime: value, withinRules1: true})
+        this.setState({...this.state, plannedTime: value, withinRules1: true, withinRules2: true})
     };
 
 
