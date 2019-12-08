@@ -18,19 +18,20 @@ export class Interval extends React.Component {
     }
 
     onChangeHours = (value) => {
-        this.setState({...this.state, hours: value})
+        this.setState({...this.state, hours: value, withinRules: true})
 
     };
     onChangeMinutes = (value) => {
-        this.setState({...this.state, minutes: value})
+        this.setState({...this.state, minutes: value, withinRules: true})
     };
     onChangeStartPG = (value) => {
-        this.setState({...this.state, startPG: value})
+        this.setState({...this.state, startPG: value, withinRules: true})
     };
 
 
     calculateDive = () => {
 
+        console.log(this.state)
         pgroups = ['A','B','C','D','E','F','G','H','I','J','K','L', 'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
         startPGIntervals = {
@@ -78,21 +79,29 @@ export class Interval extends React.Component {
         endPGindex = 0
         timeintervals = []
 
+
+        if (this.state.startPG == '' || this.state.hours == '' || this.state.minutes == '') {
+            Alert.alert('Error','Please enter all input values.');
+            this.setState(prevState => ({...prevState, withinRules: false, calculatePressed: false, startPG: '', hours: '0', minutes: '0', interval: '', endPG: ''}))
+            return null
+        }
+
+
         if (!(startPG.match(/^[A-Z]$/))) {
             Alert.alert('Error','Please enter a single letter from A-Z');
-            this.setState({...this.state, withinRules: false, calculatePressed: false, startPG: '', hours: '0', minutes: '0', interval: '', endPG: ''})
+            this.setState(prevState => ({...prevState, withinRules: false, calculatePressed: false, startPG: '', hours: '0', minutes: '0', interval: '', endPG: ''}))
             return null
         }
 
         if ( hours < 0 || minutes < 0) {
             Alert.alert('Error','Please enter positive values');
-            this.setState({...this.state, withinRules: false, calculatePressed: false, startPG: '', hours: '0', minutes: '0', interval: '', endPG: ''})
+            this.setState(prevState => ({...prevState, withinRules: false, calculatePressed: false, startPG: '', hours: '0', minutes: '0', interval: '', endPG: ''}))
             return null
         }
 
         if ( minutes > 60) {
             Alert.alert('Error','Please enter up to 60 minutes');
-            this.setState({...this.state, withinRules: false, calculatePressed: false, startPG: '', hours: '0', minutes: '0', interval: '', endPG: ''})
+            this.setState(prevState => ({...prevState, withinRules: false, calculatePressed: false, startPG: '', hours: '0', minutes: '0', interval: '', endPG: ''}))
             return null
         }
 
@@ -108,7 +117,8 @@ export class Interval extends React.Component {
             endPG = pgroups[endPGindex]
         }
 
-        this.setState({...this.state, withinRules: true, calculatePressed: true, startPG: startPG, hours: hours.toString(), minutes: minutes.toString(), interval: interval.toString(), endPG: endPG})
+        this.setState(prevState => ({...prevState, withinRules: true, calculatePressed: true,
+            startPG: startPG, hours: hours.toString(), minutes: minutes.toString(), interval: interval.toString(), endPG: endPG}))
 
     }
 

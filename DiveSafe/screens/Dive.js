@@ -32,7 +32,6 @@ export class Dive extends React.Component {
       }
     }
   
-
     onChangeDepth = (value) => {
         this.setState(prevState => ({...prevState, data: {
             ...prevState.data,
@@ -176,10 +175,10 @@ Upon surfacing, the diver must remain out of the water for at least 24 hours pri
         return (
         <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
         alwaysBounceVertical={false} alwaysBounceHorizontal={false} {...this.props}>
-            <Text category='s1'>Current Pressure Group: </Text>
+            {/* <Text category='s1'>Current Pressure Group: A</Text>
             <Text category='h5'>{this.state.data.lastdive.pGroup}</Text>
-            <Text category='s1'>Current Residual Nitrogen: </Text>
-            <Text category='h5'>{this.state.data.lastdive.residualNitrogen}</Text>
+            <Text category='s1'>Current Residual Nitrogen: 0</Text>
+            <Text category='h5'>{this.state.data.lastdive.residualNitrogen}</Text> */}
             <Input label='DEPTH' placeholder='Enter depths below 42 meters.'
                 value={this.state.data.plannedDive.depth}
                 onChangeText={this.onChangeDepth}
@@ -206,7 +205,6 @@ Upon surfacing, the diver must remain out of the water for at least 24 hours pri
 
                 <Button style={styles.button} onPress={this.proceedPressed}status={this.state.data.plannedDive.comments == '' ? 'success': 'warning'}>Proceed</Button>
             </View>}
-            {console.log(this.state)}
         </ScrollView>
         )
     }

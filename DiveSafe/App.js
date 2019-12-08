@@ -9,6 +9,7 @@ import { Login } from './screens/Login';
 import { Home } from './screens/Home';
 import { Dive } from './screens/Dive';
 import { Interval } from './screens/Interval';
+import { Continue } from './screens/Continue';
 import { History } from './screens/History';
 import { Timer } from './screens/Timer';
 import { SingleDivePage } from './screens/SingleDivePage';
@@ -89,7 +90,8 @@ export default function App() {
             {/* <Scene initial back key="Login" component={Login} title="Login" /> */}
             <Scene initial key="Home" component={Home} title="Home" onEnter={this.handleEntrance}/>
             <Scene lazy back key="Dive" component={Dive} title="Dive" />
-            <Scene lazy back key="Interval" component={Interval} title="Interval" />
+            <Scene lazy back key="Interval" component={Interval} title="Interval" /> 
+            <Scene lazy back key="Continue" component={Continue} title="Continue" />
             <Scene lazy back key="Timer" component={Timer} title="Timer" />
             <Scene lazy back key="History" component={History} title="History" />
             <Scene lazy back key="SingleDivePage" component={SingleDivePage} title="Dive Summary" />
