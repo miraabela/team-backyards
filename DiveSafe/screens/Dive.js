@@ -113,6 +113,10 @@ export class Dive extends React.Component {
         }
 
         if (withinRules) {	
+
+            if (depth >= 30) {
+                safetystop = true
+            }
             for (let i = 0; i < depths.length; i++) {
                 timeintervals = [...timeints[i]]
                 
