@@ -21,3 +21,7 @@ npm start
 ```
 
 The client uses Expo. Open the link provided, and on a device with the Expo application installed, open the camera and scan the QR code on the bottom left.
+
+# Video Demo
+
+https://www.youtube.com/watch?v=v3qoZGWCvIE
