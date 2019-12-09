@@ -1,11 +1,11 @@
-# team-backyards
 
-Please see https://facebook.github.io/react-native/docs/getting-started
 
-# Running the App (Pre-Requisites)
+# How to Run & Use the App (Pre-Requisites)
 
 1. Make the latest version of Node.js LTS is installed
 2. Install the Expo app on your (iOS or Android) mobile device
+If you have issues please see https://facebook.github.io/react-native/docs/getting-started
+
 
 # Install
 
