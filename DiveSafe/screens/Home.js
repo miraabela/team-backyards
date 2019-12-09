@@ -35,15 +35,10 @@ export class Home extends React.Component {
     return (
     <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
     alwaysBounceVertical={false} alwaysBounceHorizontal={false} {...this.props}>
-        <Text category='h3'>Welcome, {this.state.data.user}</Text> 
-        <Text category='s1'>Time since last dive: </Text>
-        <Text category='h5'>{this.state.data.lastdive.surfaceInterval == '' ? '24+ hours': this.state.data.lastdive.residualNitrogen}</Text>
-        <Text category='s1'>Current pressure group:  </Text>
-        <Text category='h5'>{this.state.data.lastdive.pGroup == '' ? 'A': this.state.data.lastdive.pGroup}</Text>
-        <Text category='s1'>Residual nitrogen: </Text>
+        <Text category='h3'>Welcome to Dive Safe</Text> 
 
-        <Text category='h5'>{this.state.data.lastdive.residualNitrogen == '' ? '0': this.state.data.lastdive.residualNitrogen}</Text>
-        <Button style={styles.button} onPress={Actions.Dive} status='info'>Start Dive</Button>
+
+        <Button style={styles.button} onPress={Actions.Dive} status='info'>New Dive</Button>
         <Button style={styles.button} onPress={Actions.History} status='info'>See History</Button>
         <Button style={styles.button} onPress={Actions.Interval} status='info'>Surface Intervals</Button>
         <Button style={styles.button} onPress={Actions.Continue} status='info'>Continuing Dives</Button>
