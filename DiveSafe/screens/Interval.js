@@ -31,7 +31,6 @@ export class Interval extends React.Component {
 
     calculateDive = () => {
 
-        console.log(this.state)
         pgroups = ['A','B','C','D','E','F','G','H','I','J','K','L', 'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
         startPGIntervals = {
@@ -128,7 +127,9 @@ export class Interval extends React.Component {
         <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
         alwaysBounceVertical={false} alwaysBounceHorizontal={false} {...this.props}>
 
-            <Input label='Start PG' placeholder='Enter starting pressure group.'
+            <Text category='h6'>Calculate Current Pressure Group</Text>
+
+            <Input label='Last Pressure Group' placeholder='Enter pressure group of last dive.'
                 value={this.state.startPG}
                 onChangeText={this.onChangeStartPG}
                 returnKeyType='done'

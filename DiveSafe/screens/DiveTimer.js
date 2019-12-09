@@ -4,6 +4,8 @@ import {
   } from 'react-native'
 import moment from 'moment'
 import { Actions } from 'react-native-router-flux'
+import { Text as UIText } from 'react-native-ui-kitten';
+
 
 function Timer({ interval, style }) {
   const pad = (n) => n < 10 ? '0' + n : n
@@ -76,15 +78,38 @@ function ButtonsRow({ children }) {
 }
 
 export class DiveTimer extends React.Component {
+
+  componentWillMount() {
+    this.getData()
+  }
+  updateState = (data) => {
+    this.setState(prevState => ({...prevState, data: {data}, isLoading: false}))
+  }
+
+  getData = async () => {
+    try {
+      data = await AsyncStorage.getItem('userData')
+      newState = JSON.parse(data)
+      this.updateState(newState)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
   constructor(props) {
     super(props)
     this.state = {
+      data: {},
+      isLoading: true,
       start: 0,
       now: 0,
       phases: [ ],
       button_label: 'Ascend',
       counter: 0, 
-      safety_stop: true,
+      safety_stop: false,
+      plannedDepth: 0,
+      plannedTime: 0,
     }
   }
   componentWillUnmount() {
@@ -109,6 +134,7 @@ export class DiveTimer extends React.Component {
    * Phase timer starts from 00:00:00
   */
   nextPhase = () => {
+    console.log(this.state)
     const phase = ['Safety Stop', 'Ascend']
     const { phases, now, start, counter, safety_stop } = this.state
     const [firstPhase, ...other] = phases
@@ -153,14 +179,51 @@ export class DiveTimer extends React.Component {
     }, 100)
   }
 
-  finish = () => {
+  finish = async () => {
+    try {
+      totaltime = 0
+      for (let i = 0; i < this.state.phases.length; i++) {
+        totaltime += this.state.phases[i]
+      }
+      cd = {
+        startingPG: '', 
+        endingPG:  this.state.data.plannedDive.newPgroup, 
+        plannedDepth: this.state.data.plannedDive.depth,
+        plannedTime: this.state.data.plannedDive.time,
+        surfacedTime: (new Date()).toISOString(),
+        phases: [...this.state.phases],
+        totalTime: totaltime,
+        safety_stop: this.state.safety_stop,
+        location: 'Honolulu',
+      }
+      this.state.data.diveHistory.append(cd)
+      this.setState(prevState => ({...prevState, data: {
+        ...prevState.data,
+        currentDive: {cd}
+      }}))
+      AsyncStorage.mergeItem('userData', JSON.stringify(this.state.data))
+    } catch (error) {
+        console.log(error)
+    }
     Actions.SingleDivePage()
   }
   render() {
+
+    if (this.state.isLoading) {
+      return <Text category='h2'>Loading...</Text>
+  }
+  
     const { now, start, phases, button_label, counter, safety_stop } = this.state
     const timer = now - start
     return (
       <View style={styles.container}>
+        <UIText category='h6'>Planned Bottom Time:</UIText>
+        {/* <UIText category='s1'> RETRIEVE BOTTOM TIME FROM PLANNEDDIVE </UIText> */}
+        <UIText category='h6'>Planned Depth: </UIText>
+        {/* <UIText category='s1'> RETRIEVE DEPTH FROM PLANNEDDIVE </UIText> */}
+        <UIText category='h6'>Safety Stop: </UIText>
+        {/* <UIText category='s1'> {this.state.data.plannedDive.safetystop ? 'Required at 5 meters for 3 minutes.' : 'Not Required'}</UIText> */}
+
         <Text category='label'>Timer</Text>
         <Timer
           interval={phases.reduce((total, curr) => total + curr, 0) + timer}
@@ -227,6 +290,7 @@ export class DiveTimer extends React.Component {
     )
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {

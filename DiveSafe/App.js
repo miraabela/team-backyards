@@ -10,9 +10,12 @@ import { Home } from './screens/Home';
 import { Dive } from './screens/Dive';
 import { Interval } from './screens/Interval';
 import { Continue } from './screens/Continue';
+import { Continue2 } from './screens/Continue2';
 import { History } from './screens/History';
 import { Timer } from './screens/Timer';
 import { SingleDivePage } from './screens/SingleDivePage';
+import { SingleDivePage2 } from './screens/SingleDivePage2';
+
 import { DiveSummary } from './screens/DiveSummary';
 import { DiveTimer } from './screens/DiveTimer';
 
@@ -20,53 +23,33 @@ import { DiveTimer } from './screens/DiveTimer';
 
 export default function App() {
 
-  state = {
-    user: 'Admin',
-    lastdive: {
-      pGroup: '',
-      residualNitrogen: '',
-      surfaceInterval: '',
-    },
-    plannedDive: {
-        depth: '',
-        time: '',
-        newPgroup: '',
-        safetystop: false,
-        withinRules: true,
-        calculatePressed: false,
-        comments: '',
-    },
-    currentDive: {
-      currentPgroup: '', //assign to planned pGroup at  updateState
-
-      isDescending: false, //should be true as soon as timer starts. update to false when stop button pressed
-      startedDescent: '', // new Date() as soon as Start Timer is pressed
-      currentBottomTime: '', //update every 5 seconds. Stop updating when paused or stopped
-      
-      exceeded: false, // true if went over planned dive time
-      statusMessage: '', //update warning when almost about to exceed planned dive time maximum, etc
-      logOfMessages: [], //keeps track of messages displayed to user
-
-      isAscending: false, //should be false until Ascend Timer is started. 
-      startedAscent: '', //new Date() when Ascend Timer is pressed
-      currentAscendTime: '', //zero initially, update every 5 seconds after Ascent Timer is pressed
-      
-      // Pause ascending timer, start safetystop, after done, resume ascending
-      // only transition to safety stsop timer if required in plan, or if exceeded time & recalculated plan requires stop
-      isSafetyStopping: false, //should be false until Ascend Timer is paused & safety started 
-      safetystop: '', // assign to planned unless exceeded dive time, then recalculate
-      startedSafetyStop: '', //new Date() as soon as Safety Stop is pressed, ONLY IF NEEDED
-      currentSafetyTime: '', //update every 5 seconds. Stop updating when paused or stopped
-
-      surfaced: false, //should be false until ascend timer is done. then update to true
-      surfacedTime: '', //new Date() when ascend timer is stopped
-
-      endPgroup: '',
-      actualDepth: '', //
-      actualTime: '', // Actual bottom time (descend time only)
-      location: 'Honolulu', // can just be Honolulu for now until updated
-    },
-    diveHistory: []
+state = {
+  user: { // update on Home, update on Dive page entrance. 
+    timeSince: null, // minutes since last dive
+    lastPG: '', //None if divehistory is []
+    currentPG: '', //calculate from Interval. A if divehistory is []
+  },
+  plannedDive: {
+    depth: '',
+    time: '',
+    newPgroup: '',
+    safetystop: false,
+    withinRules: true,
+    calculatePressed: false,
+    comments: '',
+  },
+  currentDive: {
+    startingPG: '', //same as user.currentPG
+    endingPG: '', //same as plannedDive.newPGroup
+    plannedDepth: 0,
+    plannedTime: 0,
+    surfacedTime: '', //new Date toString when finish button is pressed
+    phases: [],
+    totalTime: 0, //summary of phases
+    safety_stop: false,
+    location: '',
+  },
+  diveHistory: []
 }
 
   setData = async () => {
@@ -93,10 +76,12 @@ export default function App() {
             <Scene lazy back key="Dive" component={Dive} title="Dive" />
             <Scene lazy back key="Interval" component={Interval} title="Interval" /> 
             <Scene lazy back key="Continue" component={Continue} title="Continue" />
+            <Scene lazy back key="Continue2" component={Continue2} title="Continue" />
             <Scene lazy back key="Timer" component={Timer} title="Timer" />
             <Scene lazy back key="DiveTimer" component={DiveTimer} title="Dive Timer" />
             <Scene lazy back key="History" component={History} title="History" />
             <Scene lazy back key="SingleDivePage" component={SingleDivePage} title="Dive Summary" />
+            <Scene lazy back key="SingleDivePage2" component={SingleDivePage2} title="Dive Summary" />
             <Scene lazy back key="DiveSummary" component={DiveSummary} title="Dive Summary" />
           </Stack>
         </Router>

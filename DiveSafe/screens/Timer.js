@@ -59,6 +59,7 @@ export class Timer extends React.Component {
         location: 'Honolulu', // can just be Honolulu for now until updated
       }
 
+      
     continueToSummary = async () => {
         
         if (this.state.data.surfaced == true) {

@@ -16,11 +16,10 @@ export class SingleDivePage extends React.Component {
     super(props)
     this.state = {
       location: 'Honolulu',
-      actualDepth: '22',
-      descend_time: '4', 
-      ascend_time: '4', 
-      date: new Date().toDateString(),
-      actualTime: 30,
+      actualDepth: '22', //planneddepth
+      descend_time: '4',  //phases
+      ascend_time: '4',  //phases
+      date: new Date().toDateString(), //surfacedTime
       pGroup_starting: 'A',
       pGroup_ending: 'C',
       safetyStopMeters: '5',
@@ -122,6 +121,8 @@ export class SingleDivePage extends React.Component {
                 </TextInput>
                 <Text style={styles.labelText}> min</Text>
               </ButtonsRow>
+
+              {/* CHECK IF LAST DIVE SAFETYSOTP IS TRUE */}
               <Text style={styles.sectionTitle} category='s1'>Safety Stop </Text>
               <ButtonsRow>
                 <Text>Depth: </Text>

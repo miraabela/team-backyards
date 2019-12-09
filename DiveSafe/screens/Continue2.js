@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import {  Alert, StyleSheet, ScrollView, View, AsyncStorage } from 'react-native';
 import { Button, Text, Input } from 'react-native-ui-kitten';
 import { Actions } from 'react-native-router-flux';
-import moment from 'moment'
 
-export class Continue extends React.Component {
+export class Continue2 extends React.Component {
 
  
     state = {
@@ -37,6 +36,8 @@ export class Continue extends React.Component {
 
 
      calculateContinue = () => {
+
+        console.log(this.state)
 
         pgroups = ['A','B','C','D','E','F','G','H','I','J','K','L', 'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
@@ -70,13 +71,14 @@ export class Continue extends React.Component {
         c35 =[[3, 5, 7, 8, 9, 9, 10, 11, 12, 13, 14],
         [11, 9, 7, 6, 5, 5, 4, 3]],
         
-        c40 = [[2, 5, 6, 7, 7, 8, 9],
+        c40 = [[2, 5, 6, 7, 
+            7, 8, 9],
         [7, 4]]
         
         depths = [10, 12, 14, 16, 18, 20, 22, 25, 30, 35, 40, 42];
         timeints = [c10, c12, c14, c16, c18, c20, c22, c25, c30, c35, c40];
 
-        if (this.state.depth == '') { 
+        if (this.state.lastPG == '' || this.state.depth == '') { 
             Alert.alert('Error','Please enter all input values');
             this.setState(prevState => ({...prevState, withinRules1: false, calculatePressed1: false, 
                 lastPG: '', depth: '', nitroMins: '', maxPlanTime: '', 
@@ -85,7 +87,7 @@ export class Continue extends React.Component {
             return null
         }
 
-        lastPG = this.props.currentPG
+        lastPG = this.state.lastPG.toUpperCase().trim()
         depth = parseFloat(this.state.depth)
         withinRules1 = this.state.withinRules1
         nitroMins = 0
@@ -273,32 +275,21 @@ Upon surfacing, the diver must remain out of the water for at least 24 hours pri
     }
 
 
-    // Save CurrentDive to storage, retrieve in Timer. When timer is done, append to DiveHistory, clear CurrentDive
-    // Timer needs: planned bottom time, depth. 
-    proceedPressed = async () => {
-        try {
-            AsyncStorage.mergeItem('userData', JSON.stringify(this.state.data))
-        } catch (error) {
-            console.log(error)
-        }
-        // Actions.Timer()
-        Actions.DiveTimer()
-    }
 
     render(){
 
         return (
         <ScrollView style={styles.container} bounces={false} bouncesZoom={false} 
         alwaysBounceVertical={false} alwaysBounceHorizontal={false} {...this.props}>
-            <Text category='h6'>Continue Diving</Text>
-            <Text category='s1'>Time since last dive: {this.props.timeSince.toString()}</Text>
+            <Text category='h6'>Conting Dive Constraint Calculator</Text>
+            <Text category='s1'>You dove within the past 6 hours.</Text>
 
-            {/* ENTER DATA HERE */}
-            <Input label='Current Pressure Group'
-                value={this.props.currentPG.toString()}
+            <Text category='s1'>Based on Surface Interval Calculator, input your Current Pressure Group</Text>
+            <Input label='Current Pressure Group' placeholder='Enter current pressure group.'
+                value={this.state.lastPG}
+                onChangeText={this.onChangeLastPG}
                 returnKeyType='done'
                 size='medium'
-                disabled={true}
                 />
                 
              <Input label='DEPTH' placeholder='Enter a depth UNDER 40 METERS'
@@ -349,11 +340,7 @@ Upon surfacing, the diver must remain out of the water for at least 24 hours pri
     }
 }
 
-Continue.propTypes = {
-    timeSince: PropTypes.number,
-    lastPG: PropTypes.string,
-    currentPG: PropTypes.string
-}
+Continue2.propTypes = {}
 
 const styles = StyleSheet.create({
     container: {
