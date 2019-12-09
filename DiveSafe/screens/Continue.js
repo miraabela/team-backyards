@@ -274,7 +274,15 @@ Upon surfacing, the diver must remain out of the water for at least 24 hours pri
     }
 
 
-
+    proceedPressed = () => {
+        try {
+            AsyncStorage.mergeItem('userData', JSON.stringify(this.state.data))
+        } catch (error) {
+            console.log(error)
+        }
+        // Actions.Timer()
+        Actions.DiveTimer()
+    }
     render(){
 
         return (
