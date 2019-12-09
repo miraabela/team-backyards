@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {
   StyleSheet, Text, View, TouchableOpacity
   } from 'react-native'
-// import moment from 'moment'
+import moment from 'moment'
 
 function Timer({ interval, style }) {
   const pad = (n) => n < 10 ? '0' + n : n
@@ -39,7 +39,7 @@ function DivePhase({ name, interval}) {
     <View style={styles.phase}>
       <Text style={phaseStyle}>{name}</Text>
       <Timer style={[phaseStyle, styles.phaseTimer]} interval={interval}/>
-    </View> 
+    </View>
   )
 }
 
@@ -83,6 +83,7 @@ export class DiveTimer extends React.Component {
       phases: [ ],
       button_label: 'Ascend',
       counter: 0, 
+      safety_stop: false,
     }
   }
   componentWillUnmount() {
@@ -108,15 +109,24 @@ export class DiveTimer extends React.Component {
   */
   nextPhase = () => {
     const phase = ['Safety Stop', 'Ascend']
-    const { phases, now, start, counter } = this.state
+    const { phases, now, start, counter, safety_stop } = this.state
     const [firstPhase, ...other] = phases
     this.setState({
       phases: [0, firstPhase + now - start, ...other],
       start: now,
       now,
-      counter: counter + 1,
-      button_label: phase[counter],
     })
+    if (safety_stop) {
+      this.setState({
+        counter: counter + 1,
+        button_label: phase[counter],
+      })
+    } else {
+      this.setState({
+        counter: 3,
+        button_label: phase[2]
+      })
+    }
     this.resume()
   }
 
@@ -143,7 +153,7 @@ export class DiveTimer extends React.Component {
   }
 
   render() {
-    const { now, start, phases, button_label, counter } = this.state
+    const { now, start, phases, button_label, counter, safety_stop } = this.state
     const timer = now - start
     return (
       <View style={styles.container}>
