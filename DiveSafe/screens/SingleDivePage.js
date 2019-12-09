@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {  StyleSheet, ScrollView, Image, View, TextInput, AsyncStorage, TouchableOpacity } from 'react-native';
 import { Button, Text } from 'react-native-ui-kitten';
+import { Actions } from 'react-native-router-flux'
 
 
 function ButtonsRow({ children }) {
@@ -65,6 +66,9 @@ export class SingleDivePage extends React.Component {
     });
   }
 
+  finish = () => {
+    Actions.History()
+  }
 
     render(){
         return (
@@ -137,6 +141,7 @@ export class SingleDivePage extends React.Component {
                 </TextInput>
                 <Text> min</Text>
               </ButtonsRow>
+              <Button onPress={this.finish}>Done</Button>
             </View>
         </ScrollView>
         )
@@ -153,6 +158,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       paddingLeft: 20,
+      paddingRight:20,
       paddingTop: 15,
       paddingBottom: 30,
     },

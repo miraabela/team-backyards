@@ -3,6 +3,7 @@ import {
   StyleSheet, Text, View, TouchableOpacity
   } from 'react-native'
 import moment from 'moment'
+import { Actions } from 'react-native-router-flux'
 
 function Timer({ interval, style }) {
   const pad = (n) => n < 10 ? '0' + n : n
@@ -83,7 +84,7 @@ export class DiveTimer extends React.Component {
       phases: [ ],
       button_label: 'Ascend',
       counter: 0, 
-      safety_stop: false,
+      safety_stop: true,
     }
   }
   componentWillUnmount() {
@@ -152,6 +153,9 @@ export class DiveTimer extends React.Component {
     }, 100)
   }
 
+  finish = () => {
+    Actions.SingleDivePage()
+  }
   render() {
     const { now, start, phases, button_label, counter, safety_stop } = this.state
     const timer = now - start
@@ -209,6 +213,12 @@ export class DiveTimer extends React.Component {
               color='#FFFFFF'
               background='#00D494'
               onPress={this.resume}
+            />
+            <RoundButton
+              title='Finish Dive'
+              color='#FFFFFF'
+              background='#3366FF'
+              onPress={this.finish}
             />
           </ButtonsRow>
         )}
